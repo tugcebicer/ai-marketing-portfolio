@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tugce Bicer — AI Marketing Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f3ef;
+    --ink: #1a1814;
+    --muted: #8a8680;
+    --accent: #c9603a;
+    --accent-light: #fdf0ea;
+    --accent-border: #f5cbb8;
+    --card: #ffffff;
+    --border: #e2dfd9;
+    --tag-bg: #f0ece5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(245,243,239,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  header {
+    max-width: 1200px; margin: 0 auto;
+    padding: 9rem 3rem 5rem;
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5rem; align-items: center;
+  }
+  .hero-text { opacity: 0; animation: fadeUp 0.9s 0.15s forwards; }
+  .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
+  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.6rem, 4.5vw, 4rem); line-height: 1.08; letter-spacing: -0.01em; margin-bottom: 1.4rem; }
+  h1 em { font-style: italic; color: var(--accent); }
+  .hero-desc { font-size: 0.96rem; color: var(--muted); max-width: 42ch; margin-bottom: 2rem; line-height: 1.8; }
+  .hero-meta { display: flex; gap: 1.8rem; font-size: 0.74rem; letter-spacing: 0.07em; color: var(--muted); text-transform: uppercase; }
+  .hero-meta span { display: flex; align-items: center; gap: 0.5rem; }
+  .hero-meta span::before { content: '—'; color: var(--accent); }
+
+  .hero-visual { opacity: 0; animation: fadeUp 0.9s 0.35s forwards; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.5rem; line-height: 1; margin-bottom: 0.3rem; }
+  .stat-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .stat-card.dark { background: var(--ink); border-color: var(--ink); grid-column: span 2; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem; }
+  .stat-card.dark .stat-label { color: rgba(255,255,255,0.4); }
+  .stat-card.dark .stat-num { font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 400; color: white; }
+
+  /* SECTIONS */
+  section { max-width: 1200px; margin: 0 auto; padding: 5.5rem 3rem; }
+  .section-header { display: flex; align-items: baseline; gap: 1.2rem; margin-bottom: 3rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
+  .section-num { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+  h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.7rem, 2.8vw, 2.4rem); letter-spacing: -0.01em; }
+  .section-note { margin-left: auto; font-size: 0.74rem; color: var(--muted); }
+
+  /* FEATURED CARDS */
+  .featured-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem;
+    transition: transform 0.25s, box-shadow 0.25s;
+    opacity: 0; animation: fadeUp 0.65s forwards;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 18px 38px rgba(0,0,0,0.07); }
+  .project-card:nth-child(1) { animation-delay: 0.05s; }
+  .project-card:nth-child(2) { animation-delay: 0.15s; }
+  .project-card:nth-child(3) { animation-delay: 0.25s; }
+  .project-card.featured { border-color: var(--accent-border); background: linear-gradient(150deg, #fff 0%, var(--accent-light) 100%); }
+
+  .card-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--tag-bg); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 1.3rem; flex-shrink: 0; }
+  .project-card.featured .card-icon { background: var(--accent-border); }
+  .card-label { font-size: 0.63rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+  .project-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.12rem; letter-spacing: -0.01em; margin-bottom: 0.7rem; line-height: 1.25; }
+  .project-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.72; margin-bottom: 1.3rem; flex: 1; }
+
+  .card-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.73rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); text-decoration: none; margin-bottom: 1rem; }
+  .card-link:hover { text-decoration: underline; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: auto; }
+  .tag { font-size: 0.63rem; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 100px; background: var(--tag-bg); color: var(--muted); border: 1px solid var(--border); }
+  .tag.hi { background: var(--accent-light); color: var(--accent); border-color: var(--accent-border); }
+
+  /* SUPPORTING CARDS */
+  .supporting-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .support-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem 1.8rem;
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    opacity: 0; animation: fadeUp 0.6s forwards;
+    transition: transform 0.2s;
+  }
+  .support-card:hover { transform: translateY(-2px); }
+  .support-card:nth-child(1) { animation-delay: 0.05s; }
+  .support-card:nth-child(2) { animation-delay: 0.15s; }
+  .support-card:nth-child(3) { animation-delay: 0.25s; }
+  .support-icon { width: 38px; height: 38px; flex-shrink: 0; border-radius: 9px; background: var(--tag-bg); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; margin-top: 2px; }
+  .support-label { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
+  .support-card h4 { font-family: 'DM Serif Display', serif; font-size: 1rem; margin-bottom: 0.45rem; letter-spacing: -0.01em; }
+  .support-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.65; margin-bottom: 0.9rem; }
+
+  /* SKILLS */
+  .skills-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; }
+  .skill-group h4 { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
+  .skill-list { list-style: none; }
+  .skill-list li { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+  .skill-list li:last-child { border-bottom: none; }
+  .skill-bar { width: 72px; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .skill-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); max-width: 1200px; margin: 0 auto; padding: 2.5rem 3rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em; }
+  footer a { color: var(--ink); text-decoration: none; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 900px) {
+    header { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 2.5rem; }
+    .featured-grid, .supporting-grid, .skills-wrap { grid-template-columns: 1fr; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">Tugce Bicer</a>
+  <div class="nav-links">
+    <a href="#featured">Featured</a>
+    <a href="#more">More Work</a>
+    <a href="#skills">Skills</a>
+  </div>
+</nav>
+
+<header>
+  <div class="hero-text">
+    <p class="hero-eyebrow">AI Marketing Traineeship · Quiet Edge</p>
+    <h1>Building <em>real</em> AI marketing systems — not just theory.</h1>
+    <p class="hero-desc">8 weeks of hands-on AI marketing projects spanning predictive modeling, automation pipelines, LLM-enhanced SEO, and prompt engineering — supervised by Kate Busby at Quiet Edge.</p>
+    <div class="hero-meta">
+      <span>Amsterdam</span>
+      <span>8 Weeks</span>
+      <span>6 Projects</span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Projects</div></div>
+      <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Weeks</div></div>
+      <div class="stat-card dark">
+        <div><div class="stat-label">Supervised by</div><div class="stat-num">Kate Busby · Quiet Edge</div></div>
+        <span style="font-size:1.3rem;color:rgba(255,255,255,0.25)">✦</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- FEATURED -->
+<section id="featured">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>Featured Projects</h2>
+    <span class="section-note">Core deliverables</span>
+  </div>
+  <div class="featured-grid">
+
+    <div class="project-card featured">
+      <div class="card-icon">◎</div>
+      <div class="card-label">Predictive Modeling</div>
+      <h3>Churn Risk Prediction with Vertex AI AutoML</h3>
+      <p>Built a binary churn classifier on a synthetic app user dataset using Google Vertex AI AutoML and Gradient Boosting. Engineered features from session data, then evaluated with Precision-Recall and ROC curves (AUC 1.000), a confusion matrix, and SHAP-based feature attribution — all reproduced in a Python notebook mirroring Vertex AI's evaluation panel.</p>
+      <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1rem;">
+        <a class="card-link" href="https://console.cloud.google.com/vertex-ai/models/locations/us-central1/models/3081534168958500864/versions/1/evaluations/details/2982828208792389559?project=project-895fffe1-8626-4aed-a59" target="_blank">↗ Vertex AI Evaluation</a>
+      </div>
+      <div class="tags">
+        <span class="tag hi">Vertex AI</span>
+        <span class="tag hi">Gradient Boosting</span>
+        <span class="tag">SHAP</span>
+        <span class="tag">Python</span>
+        <span class="tag">Churn Prediction</span>
+      </div>
+    </div>
+
+    <div class="project-card featured">
+      <div class="card-icon">⇄</div>
+      <div class="card-label">Signal Detection & Automation</div>
+      <h3>Real-Time Buying Signal Alerts via Zapier & Slack</h3>
+      <p>Mapped buying signals across TOFU, MOFU, and BOFU for multiple brands. Wrote AI prompts to detect signals from transcripts and deployed a Zapier pipeline posting real-time alerts to Slack. Measured detection accuracy across 3 live alert scenarios.</p>
+      <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1rem;">
+        <a class="card-link" href="https://zapier.com/editor/352164435/draft/_GEN_1772543101631/fields" target="_blank">↗ Zapier Pipeline</a>
+        <a class="card-link" href="https://app.slack.com/client/T0AHST2LX47/C0AJM8H7BKK?entry_point=default_oauth" target="_blank">↗ Slack Alerts</a>
+      </div>
+      <div class="tags">
+        <span class="tag hi">Zapier</span>
+        <span class="tag hi">Slack Webhooks</span>
+        <span class="tag">Signal Detection</span>
+        <span class="tag">Prompt Engineering</span>
+        <span class="tag">Automation</span>
+      </div>
+    </div>
+
+    <div class="project-card featured">
+      <div class="card-icon">✦</div>
+      <div class="card-label">LLM-Enhanced SEO</div>
+      <h3>AI Content Campaign — Best AI Tools 2026</h3>
+      <p>Full-funnel AI content campaign targeting "Best AI Tools 2026." Research via Google Trends and AnswerThePublic, then produced a voice-optimised AI avatar video (HeyGen) and an SEO landing page (Lovable), tested against Perplexity AI to simulate AI-driven search. Paired with a contextual ad strategy across Search, YouTube, Display, and Reddit.</p>
+      <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1rem;">
+        <a class="card-link" href="https://app.heygen.com/create-v4/d4ccaf96364f440db14e1b17255711fc" target="_blank">↗ HeyGen Video</a>
+        <a class="card-link" href="SEO_Report.pdf" target="_blank">↗ Full Report (PDF)</a>
+      </div>
+      <div class="tags">
+        <span class="tag hi">HeyGen</span>
+        <span class="tag hi">Lovable</span>
+        <span class="tag">SEO Strategy</span>
+        <span class="tag">Perplexity AI</span>
+        <span class="tag">Contextual Ads</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MORE WORK -->
+<section id="more">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>More Work</h2>
+    <span class="section-note">Supporting projects</span>
+  </div>
+  <div class="supporting-grid">
+
+    <div class="support-card">
+      <div class="support-icon">◈</div>
+      <div class="support-body">
+        <div class="support-label">AI Segmentation & Targeting</div>
+        <h4>Multi-Channel Audience Segmentation</h4>
+        <p>Scraped and structured competitor and category reviews across Reddit, Meta Ads Library, LinkedIn, and GA4 into a unified dataset. Used AI attribution tools to model channel performance and surface untapped segments and competitor weaknesses.</p>
+        <div class="tags">
+          <span class="tag">Akkio</span>
+          <span class="tag">BigQuery</span>
+          <span class="tag">spaCy</span>
+          <span class="tag">Attribution Modeling</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="support-card">
+      <div class="support-icon">▣</div>
+      <div class="support-body">
+        <div class="support-label">Positioning & Creative</div>
+        <h4>Persona-Driven Go-To-Market Strategy</h4>
+        <p>Ran AI-powered customer interviews across ChatGPT, Claude, and Grok to compare outputs and extract positioning insights. Delivered a beachhead persona, a Lovable landing page with chatbot, a CapCut video explainer, and persona-specific copy via Copy.ai and Canva.</p>
+        <div class="tags">
+          <span class="tag">ChatGPT / Claude / Grok</span>
+          <span class="tag">Lovable</span>
+          <span class="tag">CapCut</span>
+          <span class="tag">Copy.ai</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="support-card">
+      <div class="support-icon">◇</div>
+      <div class="support-body">
+        <div class="support-label">Prompt Engineering</div>
+        <h4>CREID Framework</h4>
+        <p>Developed and documented the CREID Framework (Context, Role, Explicit instruction, Input, Desired output) as a structured, reusable prompt engineering methodology for AI marketing workflows.</p>
+        <div class="tags">
+          <span class="tag">Prompt Engineering</span>
+          <span class="tag">Frameworks</span>
+          <span class="tag">Documentation</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Skills</h2>
+  </div>
+  <div class="skills-wrap">
+    <div class="skill-group">
+      <h4>AI & Data</h4>
+      <ul class="skill-list">
+        <li>Vertex AI / AutoML <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></li>
+        <li>Prompt Engineering <div class="skill-bar"><div class="skill-bar-fill" style="width:92%"></div></div></li>
+        <li>Predictive Modeling (SHAP) <div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div></li>
+        <li>LLM Workflows <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></li>
+        <li>Zapier / Automation <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div></li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <h4>Marketing</h4>
+      <ul class="skill-list">
+        <li>SEO Strategy <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div></li>
+        <li>Audience Segmentation <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div></li>
+        <li>Content Production <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></li>
+        <li>Persona & GTM Strategy <div class="skill-bar"><div class="skill-bar-fill" style="width:83%"></div></div></li>
+        <li>Contextual Advertising <div class="skill-bar"><div class="skill-bar-fill" style="width:78%"></div></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Tugce Bicer · AI Marketing Portfolio · 2025</span>
+  <span>Quiet Edge Traineeship · Supervised by <a href="/cdn-cgi/l/email-protection#bdd6dcc9d8fdccc8d4d8c9d8d9dad893d4d2">Kate Busb
